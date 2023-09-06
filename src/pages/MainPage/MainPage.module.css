@@ -1,0 +1,42 @@
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 100px;
+}
+
+.info {
+    margin: 0 auto;
+}
+
+.logoImage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.infoText {
+    font-size: 60px;
+    text-align: center;
+    line-height: 64px;
+    width: 90vh;
+    margin: 30px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px;
+}
+
+.regButton {
+    margin: 20px;
+    width: 20vh;
+    height: 5vh;
+}
+
+.loginButton {
+    width: 20vh;
+    height: 5vh;
+}
