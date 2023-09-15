@@ -1,0 +1,25 @@
+//{
+//  "parserOptions": {
+//    "sourceType": "module"
+//  },
+//  "env": { "es6": true },
+//  "plugins": ["simple-import-sort", "prettier", "import"],
+//  "rules": {
+//    "simple-import-sort/sort": "error",
+//    "sort-imports": "off",
+//    "prettier/prettier": "error",
+//    "import/first": "error",
+//    "import/newline-after-import": "error",
+//    "import/no-duplicates": "error"
+//  },
+//  "overrides": [
+//    {
+//      "files": "server/**/*.js",
+//      "env": { "node": true },
+//      "rules": {
+//        "simple-import-sort/sort": "off",
+//        "import/order": ["error", { "newlines-between": "always" }]
+//      }
+//    }
+//  ]
+//}
