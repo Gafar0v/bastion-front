@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
+import { logoutUser } from "../user/userSlice";
 
 const initialState = {
   token: null,
@@ -10,14 +12,21 @@ export const authSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       localStorage.setItem(
-        "user",
+        "token",
         JSON.stringify({
-          token: action.payload.token
+          token: action.payload.token,
         })
       );
-
       state.token = action.payload.token;
-    }
+    },
+  },
+
+  extraReducers: (builder) => {
+    builder.addCase(logoutUser, () => {
+      logoutUser();
+      localStorage.clear();
+      Cookies.remove("jwt-token");
+    })
   }
 })
 

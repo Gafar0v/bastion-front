@@ -37,6 +37,19 @@ export const signUpSlice = createSlice({
       state.isMatchPasswords = state.password === state.verifyPassword;
     },
 
+    setFullName: (state, action) => {
+      localStorage.setItem(
+        "fullName",
+        JSON.stringify({
+          name: action.payload.name,
+          surname: action.payload.surname,
+        }),
+      )
+
+      state.name = action.payload.name;
+      state.surname = action.payload.surname;
+    }
+
   },
 });
 
@@ -47,6 +60,7 @@ export const {
   changePassword,
   changeVerifyPassword,
   checkMatchPasswords,
+  setFullName
 } = signUpSlice.actions;
 
 export default signUpSlice.reducer;

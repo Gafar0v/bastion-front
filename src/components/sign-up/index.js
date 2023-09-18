@@ -1,4 +1,4 @@
-import { Box, Button, InputAdornment, TextField, ThemeProvider, Typography } from "@mui/material";
+import { Box, Button, InputAdornment, Snackbar, TextField, ThemeProvider, Typography } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import React from "react";
@@ -10,11 +10,11 @@ import {
   changePassword,
   changeVerifyPassword,
   checkMatchPasswords,
+  setFullName
 } from "../../redux/features/signUp/signUpSlice";
 import { defaultTheme } from "../../theme";
 
 import { useRegisterUserMutation } from "../../services/authApi";
-import toast from "bootstrap/js/src/toast";
 import { setUser } from "../../redux/features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -30,11 +30,10 @@ const SignUp = () => {
 
   const [ registerUser, {data: registerData, isSuccess: isRegisterSuccess, isError: isRegisterError, error: registerError } ] = useRegisterUserMutation();
 
-  const handleRegister =  async () => {
-    if (password !== verifyPassword) {
-      return toast.error("Password don't match")
-    }
+  const isSamePasswords = dispatch(checkMatchPasswords());
 
+
+  const handleRegister =  async () => {
     if (name && surname && email && password) {
        await registerUser({
         "firstname": name,
@@ -48,6 +47,7 @@ const SignUp = () => {
   React.useEffect(() => {
     if (isRegisterSuccess) {
       dispatch(setUser({ token: registerData.token }))
+      dispatch(setFullName({ name: name, surname: surname }))
       navigation("/cabinet", { replace: false })
     }
   }, [isRegisterSuccess])

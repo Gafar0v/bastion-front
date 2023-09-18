@@ -1,4 +1,4 @@
-import { Box, Button, InputAdornment, TextField, ThemeProvider, Typography } from "@mui/material";
+import { Alert, Box, Button, InputAdornment, Snackbar, TextField, ThemeProvider, Typography } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import React from "react";
@@ -10,6 +10,10 @@ import {
 import { defaultTheme } from "../../theme";
 import { useLoginUserMutation } from "../../services/authApi";
 import { useNavigate } from "react-router-dom";
+import { setUser } from "../../redux/features/auth/authSlice";
+import Cookies from "js-cookie"
+import { useGetMeQuery } from "../../services/userApi";
+import { useGetResumeQuery } from "../../services/resumeApi";
 
 const SignIn = () => {
   const { email, password } = useSelector((state) => state.signIn);
@@ -17,22 +21,49 @@ const SignIn = () => {
   const [isVisiblePassword, setVisiblePassword] = React.useState(false);
   const [ loginUser, { data: loginData, isSuccess: isLoginSuccess, isError: isLoginError, error: loginError } ] = useLoginUserMutation();
   const navigator = useNavigate();
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+  const handleOpenSnackbar = () => {
+    setOpenSnackbar(true);
+  }
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenSnackbar(false);
+  }
 
   const handleLogin = async () => {
     if (email && password) {
       await loginUser({
-        email, password
+        email, password,
       })
     }
   }
 
+
   React.useEffect(() => {
     if (isLoginSuccess) {
+      dispatch(setUser({ token: loginData.token }));
+      Cookies.set("jwt-token", loginData.token);
       navigator("/cabinet", { replace: false })
     }
-  })
+
+    if (isLoginError) {
+      dispatch(inputEmail(""));
+      dispatch(inputPassword(""));
+    }
+  }, [isLoginSuccess, isLoginError])
+
   return (
     <ThemeProvider theme={defaultTheme}>
+      {isLoginError && <Snackbar onClose={handleCloseSnackbar} autoHideDuration={4000} open={openSnackbar}>
+        <Alert severity="error" onClose={handleCloseSnackbar}>
+          {loginError.status === 403 ? `Неправильный email или пароль!` : `Что-то пошло не так! Попробуйте еще раз!`}
+        </Alert>
+      </Snackbar>}
       <Box>
         <Box paddingTop="24px">
           <TextField
@@ -73,7 +104,7 @@ const SignIn = () => {
           <Box>
             <Box>
               <Button
-                onClick={() => handleLogin()}
+                onClick={() => {handleLogin(); handleOpenSnackbar()}}
                 variant="contained"
                 fullWidth
                 sx={{ padding: "12px" }}
@@ -90,7 +121,7 @@ const SignIn = () => {
             </Box>
             <Box sx={{ paddingTop: "10px" }}>
               <Button
-                onClick={() => navigation("/sign-up", { replace: false })}
+                onClick={() => navigator("/sign-up", { replace: false })}
                 fullWidth
                 variant="outlined"
                 sx={{

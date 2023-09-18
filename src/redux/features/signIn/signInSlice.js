@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   email: "",
-  password: "",
+  password: ""
 };
 
 export const signInSlice = createSlice({
@@ -16,7 +16,7 @@ export const signInSlice = createSlice({
     inputPassword: (state, action) => {
       state.password = action.payload;
     },
-  },
+  }
 });
 
 export const { inputEmail, inputPassword } = signInSlice.actions;
