@@ -31,6 +31,9 @@ export const defaultTheme = createTheme({
             backgroundColor: "white",
           },
         },
+        text: {
+          color: "black",
+        }
       },
     },
   },

@@ -5,10 +5,11 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 import SignUpPage from "./pages/SignUp/page";
 import SignInPage from "./pages/SignIn/page";
-import Cabinet from "./components/cabinet";
 import CabinetPage from "./pages/Cabinet/page";
 import ProfilePage from "./pages/Profile/page";
 import CandidatsPage from "./pages/Candidats/page";
+import QuizPage from "./pages/Quiz/page";
+import TestTaskPage from "./pages/TestTask/page";
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
           <Route path="/cabinet" element={<CabinetPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/candidat" element={<CandidatsPage/>} />
+          <Route path="/quiz" element={<QuizPage />} />
+          <Route path="/test-task" element={<TestTaskPage />} />
         </Routes>
       </BrowserRouter>
     </Provider>

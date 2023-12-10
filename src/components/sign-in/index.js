@@ -12,8 +12,6 @@ import { useLoginUserMutation } from "../../services/authApi";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../../redux/features/auth/authSlice";
 import Cookies from "js-cookie"
-import { useGetMeQuery } from "../../services/userApi";
-import { useGetResumeQuery } from "../../services/resumeApi";
 
 const SignIn = () => {
   const { email, password } = useSelector((state) => state.signIn);

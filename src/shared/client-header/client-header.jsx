@@ -3,10 +3,11 @@ import {
   Box,
   IconButton,
   ThemeProvider,
-  Toolbar, Tooltip,
-  Typography
+  Toolbar,
+  Tooltip,
+  Typography,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import logo from "../../images/logo.png";
 import { defaultTheme } from "../../theme";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -14,8 +15,7 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import React from "react";
 import { AccountCircle } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import GroupIcon from '@mui/icons-material/Group';
-import { logout } from "../../redux/features/auth/authSlice";
+import GroupIcon from "@mui/icons-material/Group";
 import { logoutUser } from "../../redux/features/user/userSlice";
 
 const ClientHeader = ({ title }) => {
@@ -23,23 +23,38 @@ const ClientHeader = ({ title }) => {
   const navigator = useNavigate();
 
   const fullNameJSON = localStorage.getItem("fullName");
-  const { name, surname } = fullNameJSON ? JSON.parse(fullNameJSON) : { name: "", surname: "" };
+  const { name, surname } = fullNameJSON
+    ? JSON.parse(fullNameJSON)
+    : { name: "", surname: "" };
 
   const userInfoJSON = localStorage.getItem("userInfo");
   const role = userInfoJSON ? JSON.parse(userInfoJSON).role : "";
 
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar sx={{ backgroundColor: "white", boxShadow: "none" }} position="static">
+        <AppBar
+          sx={{ backgroundColor: "white", boxShadow: "none" }}
+          position="static"
+        >
           <Toolbar>
             <Tooltip title="Главная" arrow>
-
-              <img src={logo} alt="Logo" width={200} height={100}
-                   onClick={() => navigator("/cabinet", { replace: false })} style={{ cursor: "pointer" }} />
+              <img
+                src={logo}
+                alt="Logo"
+                width={200}
+                height={100}
+                onClick={() => navigator("/cabinet", { replace: false })}
+                style={{ cursor: "pointer" }}
+              />
             </Tooltip>
-            <Typography textAlign="center" color="black" variant="h4" component="div" sx={{ flexGrow: 1 }}>
+            <Typography
+              textAlign="center"
+              color="black"
+              variant="h4"
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
               {title}
             </Typography>
             <div>
@@ -53,8 +68,7 @@ const ClientHeader = ({ title }) => {
                 </IconButton>
               </Tooltip>
 
-              {
-                role === "ADMIN" &&
+              {role === "ADMIN" && (
                 <Tooltip title="Список кандидатов" arrow>
                   <IconButton
                     onClick={() => {
@@ -65,7 +79,7 @@ const ClientHeader = ({ title }) => {
                     <GroupIcon />
                   </IconButton>
                 </Tooltip>
-              }
+              )}
 
               <Tooltip title="Выйти" arrow>
                 <IconButton
