@@ -12,6 +12,7 @@ import { resumeApi } from "./services/resumeApi";
 import { userApi } from "./services/userApi";
 import { candidatsApi } from "./services/candidatsApi";
 import { quizApi } from "./services/quizApi";
+import { hwTaskApi } from "./services/hwTaskApi";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [candidatsApi.reducerPath]: candidatsApi.reducer,
     [quizApi.reducerPath]: quizApi.reducer,
+    [hwTaskApi.reducerPath]: hwTaskApi.reducer,
     signIn: signInReducer,
     signUp: signUpReducer,
     auth: authReducer,
@@ -33,7 +35,8 @@ export const store = configureStore({
       .concat(resumeApi.middleware)
       .concat(userApi.middleware)
       .concat(candidatsApi.middleware)
-      .concat(quizApi.middleware),
+      .concat(quizApi.middleware)
+      .concat(hwTaskApi.middleware),
 });
 
 setupListeners(store.dispatch);

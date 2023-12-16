@@ -30,6 +30,10 @@ const ClientHeader = ({ title }) => {
   const userInfoJSON = localStorage.getItem("userInfo");
   const role = userInfoJSON ? JSON.parse(userInfoJSON).role : "";
 
+  const handleLogout = async () => {
+    set
+  }
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ flexGrow: 1 }}>
